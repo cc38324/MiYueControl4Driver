@@ -50,7 +50,8 @@
     <navigator_display_option proxybindingid="5001">
       <translation_url>controller://driver/MiYue/translations</translation_url>
     </navigator_display_option>
-    <UI proxybindingid="5001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <UI proxybindingid="5001"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <BrandingIcon>Branding</BrandingIcon>
       <DeviceIcon>Device</DeviceIcon>
       <Icons>
@@ -1052,6 +1053,60 @@
           <Id>PlayTrack</Id>
           <!--播放 -->
           <Name>Play</Name>
+          <IconId>lis_rha_ico_play.png</IconId>
+          <Command>
+            <Name>play</Name>
+            <Type>PROTOCOL</Type>
+            <Params>
+              <Param>
+                <Name>key</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>type</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>type</Value>
+              </Param>
+              <Param>
+                <Name>playType</Name>
+                <Type>DEFAULT</Type>
+                <Value>PLAY</Value>
+              </Param>
+            </Params>
+          </Command>
+        </Action>
+        <Action>
+          <Id>PlayRepeat</Id>
+          <!--播放 -->
+          <Name>PlayRepeat</Name>
+          <IconId>lis_rha_ico_play.png</IconId>
+          <Command>
+            <Name>play</Name>
+            <Type>PROTOCOL</Type>
+            <Params>
+              <Param>
+                <Name>key</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>type</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>type</Value>
+              </Param>
+              <Param>
+                <Name>playType</Name>
+                <Type>DEFAULT</Type>
+                <Value>PLAY</Value>
+              </Param>
+            </Params>
+          </Command>
+        </Action>
+        <Action>
+          <Id>PlayShuffle</Id>
+          <!--播放 -->
+          <Name>PlayShuffle</Name>
           <IconId>lis_rha_ico_play.png</IconId>
           <Command>
             <Name>play</Name>

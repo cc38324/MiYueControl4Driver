@@ -15,7 +15,7 @@ end
 
 function ParseMessage.GetSceneList(strData)
 
-    print("starting to parse collectedRadios data")
+    dbg("starting to parse collectedRadios data")
     ProxyHelper.SceneList = strData.infos or {}
     ProxyHelper.SaveInfo("SceneList", json:encode(strData.infos))
 
@@ -55,7 +55,7 @@ end
 
 function ParseMessage.GetcollectedRadios(strData) -- 获取收藏电台
     -- body
-    print("starting to parse collectedRadios data")
+    dbg("starting to parse collectedRadios data")
     ProxyHelper.CollectedRadios = strData.infos or {}
     ProxyHelper.SaveInfo("CollectedRadios", json:encode(strData.infos))
     if (g_SCAN) then
@@ -67,7 +67,7 @@ end
 
 function ParseMessage.GetcollectedBoards(strData) -- 获取收藏的排行榜
     -- body
-    print("starting to parse collectedBoards data")
+    dbg("starting to parse collectedBoards data")
     ProxyHelper.CollectedBoards = strData.infos or {}
     ProxyHelper.SaveInfo("CollectedBoards", json:encode(strData.infos))
     if (g_SCAN) then
@@ -78,7 +78,7 @@ function ParseMessage.GetcollectedBoards(strData) -- 获取收藏的排行榜
 end
 
 function ParseMessage.GetcollectedMusic(strData) -- 获取收藏的歌曲
-    print("starting to parse CollectedMusic data")
+    dbg("starting to parse CollectedMusic data")
     ProxyHelper.CollectedMusic = strData.infos or {}
     ProxyHelper.SaveInfo("CollectedMusic", json:encode(strData.infos))
     if (g_SCAN) then
@@ -89,7 +89,7 @@ function ParseMessage.GetcollectedMusic(strData) -- 获取收藏的歌曲
 end
 function ParseMessage.BoardMusicInfos(strData) -- 每个歌单详细数据的下载保存
     -- 
-    print("starting to parse music infos")
+    dbg("starting to parse music infos")
     ProxyHelper.MusicInfos = strData.infos or {}
     -- strData.infos["index"] = strData.id
     ProxyHelper.SaveInfo(strData.id, json:encode(strData.infos))
@@ -125,6 +125,7 @@ function BrowseLocalMusic(idBinding, tParams)
 end
 
 function BrowseCollectedBoards(idBinding, tParams)
+    dbg("boadr xxxxxxxxxxxx")
     local tListItems = {}
     g_CollectedBoards = ProxyHelper.ReadInfo("CollectedBoards")
     local length = #g_CollectedBoards
@@ -135,7 +136,6 @@ function BrowseCollectedBoards(idBinding, tParams)
         local tmp = {
             type = "boards",
             folder = "false",
-            subtext = "",
             text = title,
             key = id,
             ImageUrl = ImageUrl,
@@ -189,6 +189,7 @@ function BrowseBoardMusicInfos(idBinding, tParams, key)
 end
 
 function BrowseCollectedMusic(idBinding, tParams)
+    dbg("radio xxxxxxxxxxxxxxx")
     local tListItems = {}
     g_CollectedMusic = ProxyHelper.ReadInfo("CollectedMusic") -- 从本地音乐文件里面读取数据 创建表格 后期放到初始化中
     local length = #g_CollectedMusic
@@ -291,7 +292,7 @@ end
 function build_MediaByKeyTable(data)
 
     if (type(data) == "table") then
-        print("start to buidmedia")
+        dbg("start to buidmedia")
         local key, songId, img, isNetUrl, fileName, fileUrl, singer, songSrc, strType, indexID
         for i, v in pairs(data) do
             title = v.title
@@ -302,10 +303,10 @@ function build_MediaByKeyTable(data)
             fileUrl = v.fileUrl
             songId = v.songId
             indexID = v.indexID
-            -- print("songSrc is " .. songSrc)
-            -- print("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl)
+            -- dbg("songSrc is " .. songSrc)
+            -- dbg("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl)
             if (isNetUrl == 0) then
-                -- print("22222222")
+                -- dbg("22222222")
                 g_MediaByKey[v.title] = {
                     fileName = fileName,
                     fileUrl = fileUrl,
@@ -316,8 +317,8 @@ function build_MediaByKeyTable(data)
                     key = title
                 }
             else
-                --  print("333333")
-                -- print("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl .. "songId is " .. songId)
+                --  dbg("333333")
+                -- dbg("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl .. "songId is " .. songId)
                 img = v.pic
                 g_MediaByKey[v.title] = {
                     fileName = fileName,
@@ -340,7 +341,7 @@ end
 function build_BoardByKeyTable(data)
 
     if (type(data) == "table") then
-        print("start to buidmedia")
+        dbg("start to buidmedia")
         local key, songId, img, isNetUrl, fileName, fileUrl, singer, songSrc, strType, indexID
         for i, v in pairs(data) do
             title = v.songlistTitle
@@ -351,11 +352,11 @@ function build_BoardByKeyTable(data)
             fileUrl = v.fileUrl
             songId = v.songId
             indexID = v.indexID
-            -- print("songSrc is " .. songSrc)
-            -- print("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl)
+            -- dbg("songSrc is " .. songSrc)
+            -- dbg("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl)
 
-            --  print("333333")
-            -- print("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl .. "songId is " .. songId)
+            --  dbg("333333")
+            -- dbg("title:"..title .. "isNetUrl : " .. isNetUrl .. "singer is " .. singer.. "songSrc is " .. songSrc .. "fileName is " .. fileName .. "fileUrl is " .. fileUrl .. "songId is " .. songId)
             img = v.pic
             g_MediaByKey[v.songlistTitle] = {
                 fileName = fileName,

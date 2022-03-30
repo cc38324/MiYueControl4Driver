@@ -473,6 +473,7 @@ function BrowseLocalMusic(idBinding, tParams)
 end
 
 function BrowseCollectedBoards(idBinding, tParams)
+    print("boadr xxxxxxxxxxxx")
     local tListItems = {}
     g_CollectedBoards = ProxyHelper.ReadInfo("CollectedBoards")
     local length = #g_CollectedBoards
@@ -483,7 +484,6 @@ function BrowseCollectedBoards(idBinding, tParams)
         local tmp = {
             type = "boards",
             folder = "false",
-            subtext = "",
             text = title,
             key = id,
             ImageUrl = ImageUrl,
@@ -537,6 +537,7 @@ function BrowseBoardMusicInfos(idBinding, tParams, key)
 end
 
 function BrowseCollectedMusic(idBinding, tParams)
+    print("radio xxxxxxxxxxxxxxx")
     local tListItems = {}
     g_CollectedMusic = ProxyHelper.ReadInfo("CollectedMusic") -- 从本地音乐文件里面读取数据 创建表格 后期放到初始化中
     local length = #g_CollectedMusic
@@ -732,7 +733,7 @@ tmpQueue = ""
 function ParseFeedback(strData)
     -- body
 
-    -- print("Begin to Parse DATA" .. strData)
+    dbg("Begin to Parse DATA" .. strData)
 
     local response = json:decode(strData)
     ProxyHelper.TCPReceiveBuf = ""
@@ -1005,6 +1006,7 @@ function PRX_CMD.GetBrowseFavoritesMenu(idBinding, tParams) -- 收藏
 
     elseif (key == "boards") then
         -- ProxyHelper.GetNextMediaLib(5)
+        print("jinru boards page")
         BrowseCollectedBoards(idBinding, tParams)
     elseif (key == "radios") then
         BrowseCollectedRadios(idBinding, tParams)
@@ -1038,7 +1040,7 @@ function PRX_CMD.BrowseStationsCommand(idBinding, tParams) -- 二级页面浏览
 end
 
 function PRX_CMD.BrowseFavoritesCommand(idBinding, tParams) -- 二级页面的收藏
-    local args = ParseProxyCommandArgs(tParams)
+    -- local args = ParseProxyCommandArgs(tParams)
     local args = ParseProxyCommandArgs(tParams)
     local tResponse = {}
     local nextscreen
@@ -1056,6 +1058,7 @@ function PRX_CMD.BrowseFavoritesCommand(idBinding, tParams) -- 二级页面的�
         DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
         g_key = args.key
     elseif (args.type == "cboards") then
+        print("jiazai cboardsyemian")
         nextscreen = "<NextScreen>BrowseCollectedBoards</NextScreen>"
         DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
         g_key = args.key

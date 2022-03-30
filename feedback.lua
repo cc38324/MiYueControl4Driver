@@ -6,7 +6,7 @@ tmpQueue = ""
 function ParseFeedback(strData)
     -- body
 
-    -- print("Begin to Parse DATA" .. strData)
+    dbg("Begin to Parse DATA" .. strData)
 
     local response = json:decode(strData)
     ProxyHelper.TCPReceiveBuf = ""

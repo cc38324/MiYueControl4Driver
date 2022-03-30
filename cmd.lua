@@ -8,7 +8,7 @@ function PRX_CMD.AddToFavorites(idBinding, tParams) -- 添加收藏
 
     else
         message = json:encode(g_MediaByKey[args.key])
-        -- print(data)
+        -- dbg(data)
         message = '{"action": "action.collect.musics","infos":[' .. message .. "]}"
     end
     ProxyHelper.SendCommand(message)
@@ -16,7 +16,7 @@ function PRX_CMD.AddToFavorites(idBinding, tParams) -- 添加收藏
 end
 -- 重要维护对象，页面
 function PRX_CMD.GetBrowseStationsMenu(idBinding, tParams) -- 浏览
-    -- print("GetBrowseStationsMenu (" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
+    -- dbg("GetBrowseStationsMenu (" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
     local args = ParseProxyCommandArgs(tParams)
 
     local tListItems = {}
@@ -47,7 +47,7 @@ function PRX_CMD.GetBrowseStationsMenu(idBinding, tParams) -- 浏览
 end
 
 function PRX_CMD.GetBrowseFavoritesMenu(idBinding, tParams) -- 收藏
-    -- print("GetBrowseStationsMenu (" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
+    -- dbg("GetBrowseStationsMenu (" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
     local args = ParseProxyCommandArgs(tParams)
 
     local tListItems = {}
@@ -63,6 +63,7 @@ function PRX_CMD.GetBrowseFavoritesMenu(idBinding, tParams) -- 收藏
 
     elseif (key == "boards") then
         -- ProxyHelper.GetNextMediaLib(5)
+        dbg("jinru boards page")
         BrowseCollectedBoards(idBinding, tParams)
     elseif (key == "radios") then
         BrowseCollectedRadios(idBinding, tParams)
@@ -96,7 +97,7 @@ function PRX_CMD.BrowseStationsCommand(idBinding, tParams) -- 二级页面浏览
 end
 
 function PRX_CMD.BrowseFavoritesCommand(idBinding, tParams) -- 二级页面的收藏
-    local args = ParseProxyCommandArgs(tParams)
+    -- local args = ParseProxyCommandArgs(tParams)
     local args = ParseProxyCommandArgs(tParams)
     local tResponse = {}
     local nextscreen
@@ -114,6 +115,7 @@ function PRX_CMD.BrowseFavoritesCommand(idBinding, tParams) -- 二级页面的�
         DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
         g_key = args.key
     elseif (args.type == "cboards") then
+        dbg("jiazai cboardsyemian")
         nextscreen = "<NextScreen>BrowseCollectedBoards</NextScreen>"
         DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
         g_key = args.key
@@ -147,7 +149,7 @@ end
 
 function PRX_CMD.NowPlayingCommand(idBinding, tParams) -- 当前播放处选择播放歌曲
     local args = ParseProxyCommandArgs(tParams)
-    -- PrintTable(args)
+    -- dbgTable(args)
     gCurrentSongIndex = tonumber(args.Id) + 1
     local message = '{"action": "action.request.switchMusic","musicIndex":' .. args.Id .. "}"
     ProxyHelper.SendCommand(message)
@@ -380,7 +382,7 @@ function PRX_CMD.ReplacePlaylist(idBinding, tParams)
         cmd = '{"action":"action.play.localmusic","musicIndex":' .. args.indexID .. "}"
 
     else
-        -- print(g_selectboardsid)
+        -- dbg(g_selectboardsid)
         id = g_selectboardsid
         for k, v in pairs(g_currentlist) do
             if (v.title == args.key) then
@@ -419,7 +421,7 @@ function PRX_CMD.PLAY(idBinding, tParams)
 end
 
 function PRX_CMD.PAUSE(idBinding, tParams)
-    print("pause is be push")
+    dbg("pause is be push")
     local ids = "PAUSE"
     DashboardChanged(ids)
     local cmd = '{"action": "action.request.playorpause","message": "pause"}'
@@ -431,7 +433,7 @@ function PRX_CMD.OFF(idBinding, tParams)
     PRX_CMD.PAUSE(5001, {
         ROOM_ID = g_RoomID
     })
-    print("Shut down player here")
+    dbg("Shut down player here")
     gQueues["STATE"] = "PAUSE"
     gCurrentSongTitle = ""
 end
@@ -467,8 +469,8 @@ function PRX_CMD.QUEUE_STATE_CHANGED(idBinding, tParams)
     local prevStateTime = tonumber(tParams["PREV_STATE_TIME"])
     local mediaId = tParams["QUEUE_INFO"]
 
-    print("PRX_CMD.QUEUE_STATE_CHANGED() for queue " .. queueId .. ": " .. prevState .. " (" .. prevStateTime ..
-              " seconds) -> " .. state .. " Station: " .. mediaId)
+    dbg("PRX_CMD.QUEUE_STATE_CHANGED() for queue " .. queueId .. ": " .. prevState .. " (" .. prevStateTime ..
+            " seconds) -> " .. state .. " Station: " .. mediaId)
 
     local queueInfo = gQueues[queueId]
     if (queueInfo ~= nil) then
@@ -497,12 +499,12 @@ function PRX_CMD.QUEUE_DELETED(idBinding, tParams)
     local lastQueueState = tParams["LAST_STATE"]
     local lastQueueStateTime = tonumber(tParams["LAST_STATE_TIME"])
 
-    print("PRX_CMD.QUEUE_DELETED() for queue " .. queueId .. ", last state was " .. lastQueueState .. " for " ..
-              lastQueueStateTime .. " seconds")
+    dbg("PRX_CMD.QUEUE_DELETED() for queue " .. queueId .. ", last state was " .. lastQueueState .. " for " ..
+            lastQueueStateTime .. " seconds")
 
     local queueInfo = gQueues[queueId]
     if (queueInfo ~= nil) then
-        print("Deleting queue info for queue " .. queueId .. ", was playing QUEUE_INFO " .. tParams["QUEUE_INFO"])
+        dbg("Deleting queue info for queue " .. queueId .. ", was playing QUEUE_INFO " .. tParams["QUEUE_INFO"])
 
         ChangeDashboard(queueInfo, nil) -- Clear the media dashboard
 
@@ -520,7 +522,7 @@ function PRX_CMD.QUEUE_DELETED(idBinding, tParams)
 end
 
 function PRX_CMD.QUEUE_MEDIA_INFO_UPDATED(idBinding, tParams)
-    -- print("22222222222222222222222222222")
+    -- dbg("22222222222222222222222222222")
 end
 
 function PRX_CMD.GetDashboard(idBinding, tParams)
@@ -533,7 +535,7 @@ function PRX_CMD.GetDashboard(idBinding, tParams)
 end
 
 function PRX_CMD.GetSettings(idBinding, tParams)
-    print("PRX_CMD.GetSettings(" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
+    dbg("PRX_CMD.GetSettings(" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
     local settings = {}
     settings.IP = g_ServerIPAddress
     settings.Status = Properties["Connection Status"]
@@ -545,24 +547,24 @@ end
 
 function PRX_CMD.SettingChanged(idBinding, tParams)
     local args = ParseProxyCommandArgs(tParams)
-    print("PRX_CMD.SettingChanged (" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
+    dbg("PRX_CMD.SettingChanged (" .. idBinding .. ", " .. tParams.SEQ .. ") for nav " .. tParams.NAVID)
     if (args.PropertyName == "ToggleButton") then
         if (args.Value == "on") then
-            print("turn on aux")
+            dbg("turn on aux")
             local cmd = '{"action":"action.aux.switch","openAux":true}'
             ProxyHelper.SendCommand(cmd)
         else
-            print("turn off aux")
+            dbg("turn off aux")
             local cmd = '{"action":"action.aux.switch","openAux":false}'
             ProxyHelper.SendCommand(cmd)
         end
     elseif (args.PropertyName == "CheckBox") then
         if (args.Value == "on") then
-            print("turn on blue")
+            dbg("turn on blue")
             local cmd = '{"action":"action.bluetooth.switch","openBluetooth":true}'
             ProxyHelper.SendCommand(cmd)
         else
-            print("turn off blue")
+            dbg("turn off blue")
             local cmd = '{"action":"action.bluetooth.switch","openBluetooth":false}'
             ProxyHelper.SendCommand(cmd)
         end
@@ -604,7 +606,7 @@ function PRX_CMD.SET_INPUT(idBinding, tParams)
         INPUT = tParams.INPUT,
         OUTPUT = tParams.OUTPUT
     })
-    print("dadasdasdasdadasdasads")
+    dbg("dadasdasdasdadasdasads")
     if (tParams.INPUT == "3011") then
         local cmd = '{"action":"action.spdif.switch","openSpdif":true}'
         ProxyHelper.SendCommand(cmd)
@@ -630,7 +632,7 @@ function PRX_CMD.BINDING_CHANGE_ACTION(idBinding, tParams)
             local room = C4:GetBoundConsumerDevices(C4:GetDeviceID() + 2, 7001)
             if (room ~= nil) then
                 for k, v in pairs(room) do
-                    print(v .. " with id " .. k)
+                    dbg(v .. " with id " .. k)
                     C4:RegisterVariableListener(k, 1031)
                     g_RoomID = k
                 end
@@ -641,14 +643,14 @@ end
 
 function PRX_CMD.GET_AUDIO_PATH(idBinding, tParams)
     for k, v in pairs(tParams) do
-        print(k, v)
+        dbg(k, v)
     end
 end
 
 function PRX_CMD.GET_AUDIO_DEVICES(idBinding, tParams)
-    print("GETAUDIODEVICE:")
+    dbg("GETAUDIODEVICE:")
     for k, v in pairs(tParams) do
-        print(k, v)
+        dbg(k, v)
     end
 end
 
