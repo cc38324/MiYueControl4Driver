@@ -29,8 +29,12 @@ function PRX_CMD.GetBrowseStationsMenu(idBinding, tParams) -- 浏览
         BrowseRadioList(idBinding, tParams)
     elseif (key == "local") then
         BrowseLocalMusic(idBinding, tParams)
-    elseif (key == "wangyi") then
-        BrowseWangYiYun(idBinding, tParams)
+    elseif (key == "singer") then
+        BrowseSingerMusic(idBinding, tParams)
+    elseif (key == "album") then
+        BrowseAlbumMusic(idBinding, tParams)
+    elseif (key == "song") then
+        BrowseLocalMusic(idBinding, tParams)
     elseif (key == "douban") then
         BrowseDouban(idBinding, tParams)
     elseif (key == "blue") then
@@ -38,8 +42,10 @@ function PRX_CMD.GetBrowseStationsMenu(idBinding, tParams) -- 浏览
         tListItems = g_browse_mainmenu
         DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], tListItems)
     else
+        print("key is " .. key)
         g_selectboardsid = key
         g_currentboards = args.text
+        g_flag = args.flag
         BrowseBoardMusicInfos(idBinding, tParams, key)
 
     end
@@ -92,6 +98,21 @@ function PRX_CMD.BrowseStationsCommand(idBinding, tParams) -- 二级页面浏览
         -- GetNextMediaLib(1)
         DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
         g_key = args.key
+    elseif (args.type == "singer") then
+        nextscreen = "<NextScreen>BrowseSingerMusic</NextScreen>"
+        -- GetNextMediaLib(1)
+        DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
+        g_key = args.key
+    elseif (args.type == "album") then
+        nextscreen = "<NextScreen>BrowseAlbumMusic</NextScreen>"
+        -- GetNextMediaLib(1)
+        DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
+        g_key = args.key
+        -- elseif (args.type == "song") then
+        --     nextscreen = "<NextScreen>BrowseStations</NextScreen>"
+        --     DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
+        --     g_key = args.key
+
     end
 
 end
@@ -182,10 +203,10 @@ function PRX_CMD.ToggleShuffle() -- 当前播放页面的打开随机播放
 end
 
 function PRX_CMD.PresetCommand(idBinding, tParams) -- 当前播放页面的收藏按钮功能实现
-    -- local args = ParseProxyCommandArgs(tParams)
-    -- local key = args.key
+    local args = ParseProxyCommandArgs(tParams)
+    local key = args.Id + 1
 
-    local message = json:encode(gNowPlaying[gCurrentSongIndex])
+    local message = json:encode(gNowPlaying[key])
 
     message = '{"action": "action.collect.musics","infos":[' .. message .. "]}"
     ProxyHelper.SendCommand(message)
@@ -322,17 +343,61 @@ function PRX_CMD.DelColletedBoards()
 
 end
 -- PlayRepeat PlayShuffle
-function PRX_CMD.PlayRepeat()
-    local cmd = '{"action":"action.play.boards","id":' .. g_selectboardsid .. ',"playType":0}}'
+function PRX_CMD.PlayRepeat(idBinding, tParams)
+    SendToProxy(5001, "SELECT_DEVICE", {
+        ROOM_ID = tParams["ROOMID"]
+    }, "COMMAND")
+    local args = ParseProxyCommandArgs(tParams)
+
+    local cmd = '{"action":"action.play.boards","id":' .. args.key .. ',"playType":0}'
     ProxyHelper.SendCommand(cmd)
     -- ProxyHelper.GetNextMediaLib(5)
+    nextscreen = "<NextScreen>#nowplaying</NextScreen>"
+    DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
 
 end
 
-function PRX_CMD.PlayShuffle()
-    local cmd = '{"action":"action.play.boards","id":' .. g_selectboardsid .. ',"playType":2}}'
+-- function PRX_CMD.Playlist(idBinding, tParams)
+
+--     local args = ParseProxyCommandArgs(tParams)
+
+--     local cmd = '{"action":"action.play.localmusic","flag":' .. g_flag .. ',"keyword":"' .. g_selectboardsid ..
+--                     '","playType":0,' .. '"musicIndex":' .. args.indexID .. '}'
+
+--     ProxyHelper.SendCommand(cmd)
+
+-- end
+
+function PRX_CMD.Playlist(idBinding, tParams)
+    SendToProxy(5001, "SELECT_DEVICE", {
+        ROOM_ID = tParams["ROOMID"]
+    }, "COMMAND")
+    local args = ParseProxyCommandArgs(tParams)
+    local tResponse = {}
+    local nextscreen
+
+    local data = json:encode(ProxyHelper.ReadInfo(g_selectboardsid))
+    data = '{"action": "action.request.music","musicIndex":' .. args.musicIndex .. ',"infos":' .. data .. "}"
+    ProxyHelper.SendCommand(data)
+
+    nextscreen = "<NextScreen>#nowplaying</NextScreen>"
+    DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
+
+end
+
+function PRX_CMD.PlayShuffle(idBinding, tParams)
+    SendToProxy(5001, "SELECT_DEVICE", {
+        ROOM_ID = tParams["ROOMID"]
+    }, "COMMAND")
+
+    local args = ParseProxyCommandArgs(tParams)
+
+    local cmd = '{"action":"action.play.boards","id":' .. args.key .. ',"playType":2}'
 
     ProxyHelper.SendCommand(cmd)
+    nextscreen = "<NextScreen>#nowplaying</NextScreen>"
+    DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], nextscreen)
+
     -- ProxyHelper.GetNextMediaLib(5)
 
 end
@@ -643,14 +708,14 @@ end
 
 function PRX_CMD.GET_AUDIO_PATH(idBinding, tParams)
     for k, v in pairs(tParams) do
-        dbg(k, v)
+        print(k, v)
     end
 end
 
 function PRX_CMD.GET_AUDIO_DEVICES(idBinding, tParams)
     dbg("GETAUDIODEVICE:")
     for k, v in pairs(tParams) do
-        dbg(k, v)
+        print(k, v)
     end
 end
 

@@ -3,11 +3,60 @@
 --
 ParseMessage = {}
 
-function ParseMessage.LocalMusic(strData)
-    ProxyHelper.LocalMusic = strData.infos or {}
-    ProxyHelper.SaveInfo("localmusic", json:encode(strData.infos)) -- 本地音乐保存为localmusic.txt
+function ParseMessage.SingerlMusic(strData)
+    ProxyHelper.SingerlMusic = strData.info or {}
+    ProxyHelper.SaveInfo("Singermusic", json:encode(strData.info))
+
+    for k, v in pairs(strData.info) do
+
+        ProxyHelper.SaveInfo(k, json:encode(v))
+
+    end
+
+    -- 本地音乐保存为localmusic.txt
+
     if (g_SCAN) then
         ProxyHelper.GetNextMediaLib(2)
+        gCurrentScan = gCurrentScan + 1
+        C4:UpdateProperty("Scan Progress", "获取本地歌曲信息中")
+    end
+
+end
+
+function ParseMessage.AlbumMusic(strData)
+    ProxyHelper.AlbumMusic = strData.info or {}
+    ProxyHelper.SaveInfo("Albummusic", json:encode(strData.info))
+
+    for k, v in pairs(strData.info) do
+
+        ProxyHelper.SaveInfo(k, json:encode(v))
+
+    end
+
+    -- 本地音乐保存为localmusic.txt
+
+    if (g_SCAN) then
+        ProxyHelper.GetNextMediaLib(3)
+        gCurrentScan = gCurrentScan + 1
+        C4:UpdateProperty("Scan Progress", "获取本地歌曲信息中")
+    end
+
+end
+
+function ParseMessage.LocalMusic(strData)
+    ProxyHelper.LocalMusic = strData.info or {}
+    ProxyHelper.SaveInfo("localmusic", json:encode(strData.info))
+
+    for k, v in pairs(strData.info) do
+
+        ProxyHelper.SaveInfo(k, json:encode(v))
+
+    end
+
+    -- 本地音乐保存为localmusic.txt
+
+    if (g_SCAN) then
+        ProxyHelper.GetNextMediaLib(4)
         gCurrentScan = gCurrentScan + 1
         C4:UpdateProperty("Scan Progress", "获取本地歌曲信息中")
     end
@@ -46,7 +95,7 @@ function ParseMessage.GetcollectedSonglist(strData) -- 获取下载收藏歌单
         ProxyHelper.AddCommandList(cmd)
     end
     if (g_SCAN) then
-        ProxyHelper.GetNextMediaLib(6)
+        ProxyHelper.GetNextMediaLib(8)
         gCurrentScan = gCurrentScan + 1
         C4:UpdateProperty("Scan Progress", " 获取收藏电台数据中")
     end
@@ -59,7 +108,7 @@ function ParseMessage.GetcollectedRadios(strData) -- 获取收藏电台
     ProxyHelper.CollectedRadios = strData.infos or {}
     ProxyHelper.SaveInfo("CollectedRadios", json:encode(strData.infos))
     if (g_SCAN) then
-        ProxyHelper.GetNextMediaLib(5)
+        ProxyHelper.GetNextMediaLib(7)
         gCurrentScan = gCurrentScan + 1
         C4:UpdateProperty("Scan Progress", " 获取收藏电台数据中")
     end
@@ -71,7 +120,7 @@ function ParseMessage.GetcollectedBoards(strData) -- 获取收藏的排行榜
     ProxyHelper.CollectedBoards = strData.infos or {}
     ProxyHelper.SaveInfo("CollectedBoards", json:encode(strData.infos))
     if (g_SCAN) then
-        ProxyHelper.GetNextMediaLib(4)
+        ProxyHelper.GetNextMediaLib(6)
         gCurrentScan = gCurrentScan + 1
         C4:UpdateProperty("Scan Progress", " 获取收藏榜单数据中")
     end
@@ -82,7 +131,7 @@ function ParseMessage.GetcollectedMusic(strData) -- 获取收藏的歌曲
     ProxyHelper.CollectedMusic = strData.infos or {}
     ProxyHelper.SaveInfo("CollectedMusic", json:encode(strData.infos))
     if (g_SCAN) then
-        ProxyHelper.GetNextMediaLib(3)
+        ProxyHelper.GetNextMediaLib(5)
         gCurrentScan = gCurrentScan + 1
         C4:UpdateProperty("Scan Progress", "获取收藏的歌曲数据中 !")
     end
@@ -97,30 +146,64 @@ function ParseMessage.BoardMusicInfos(strData) -- 每个歌单详细数据的下
 end
 
 -- 浏览本地音乐的时候处理本地音乐
+
+function BrowseSingerMusic(idBinding, tParams)
+    local tListItems = {}
+    g_SingerMusic = ProxyHelper.ReadInfo("Singermusic") -- 从本地音乐文件里面读取数据 创建表格 后期放到初始化中
+    local length = #g_SingerMusic
+    for k, v in pairs(g_SingerMusic) do
+        local tmp = {
+            type = "singer",
+            folder = "true",
+            text = k,
+            subtext = "",
+            key = k,
+            flag = 0,
+            listtype = "singermusic"
+        }
+        table.insert(tListItems, tmp)
+    end
+    -- build_MediaByKeyTable(g_LocalMusic)
+    DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], tListItems)
+end
+
+function BrowseAlbumMusic(idBinding, tParams)
+    local tListItems = {}
+    g_AblumMusic = ProxyHelper.ReadInfo("Albummusic") -- 从本地音乐文件里面读取数据 创建表格 后期放到初始化中
+    local length = #g_AblumMusic
+    for k, v in pairs(g_AblumMusic) do
+        local tmp = {
+            type = "album",
+            folder = "true",
+            text = k,
+            subtext = "",
+            key = k,
+            flag = 1,
+            listtype = "albummusic"
+        }
+        table.insert(tListItems, tmp)
+    end
+    -- build_MediaByKeyTable(g_LocalMusic)
+    DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], tListItems)
+end
+
 function BrowseLocalMusic(idBinding, tParams)
     local tListItems = {}
     g_LocalMusic = ProxyHelper.ReadInfo("localmusic") -- 从本地音乐文件里面读取数据 创建表格 后期放到初始化中
     local length = #g_LocalMusic
-    for i = 1, length do
-        local album = g_LocalMusic[i].album
-        local singer = g_LocalMusic[i].singer
-        local songSrc = g_LocalMusic[i].songSrc
-        local title = g_LocalMusic[i].title
-        local fileName = g_LocalMusic[i].fileName
-        local fileUrl = g_LocalMusic[i].fileUrl
-        local isNetUrl = g_LocalMusic[i].isNetUrl
+    for k, v in pairs(g_LocalMusic) do
         local tmp = {
-            type = "song",
-            folder = "false",
-            text = title,
+            type = "local",
+            folder = "true",
+            text = k,
             subtext = "",
-            key = title,
-            listtype = "localmusic",
-            indexID = i - 1
+            key = k,
+            flag = 2,
+            listtype = "localmusic"
         }
         table.insert(tListItems, tmp)
     end
-    build_MediaByKeyTable(g_LocalMusic)
+    -- build_MediaByKeyTable(g_LocalMusic)
     DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], tListItems)
 end
 
@@ -179,7 +262,7 @@ function BrowseBoardMusicInfos(idBinding, tParams, key)
             key = title,
             ImageUrl = img,
             indexID = indexID,
-            musicindex = i,
+            musicindex = i - 1,
             listtype = listtype
         }
         table.insert(tListItems, tmp)
@@ -206,10 +289,10 @@ function BrowseCollectedMusic(idBinding, tParams)
                 type = "song",
                 listtype = "CollectedMusic",
                 folder = "false",
-                text = title,
+                text = fileName,
                 subtext = "",
                 singer = singer,
-                key = title,
+                key = fileName,
                 ImageUrl = "",
                 musicindex = i
             }

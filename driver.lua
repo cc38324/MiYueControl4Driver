@@ -46,9 +46,11 @@ g_DriverVersion = "V1.06"
 
 function ProxyHelper.GetNextMediaLib(seq)	
 	-- body
-	local lib = {"localmusic","collectedMusic","collectedBoards","collectedRadios","collectedSonglist","scenelist"}
+	local lib = {"singer","album","localmusic","collectedMusic","collectedBoards","collectedRadios","collectedSonglist","scenelist"}
 
-	local msg_id = {'{"action":"action.request.getlocalMusic"}',
+	local msg_id = {'{"action":"action.get.classifiedLocalmusic","flag":0}',
+					'{"action":"action.get.classifiedLocalmusic","flag":1}',
+					'{"action":"action.get.classifiedLocalmusic","flag":2}',
 				    '{"action":"action.request.collectedMusic"}',
 				    '{"action":"action.request.collectedBoards"}',
 				    '{"action":"action.request.collectedRadios"}',
@@ -103,7 +105,10 @@ end
 
 
 g_browse_mainmenu = {
-	{type = "local", folder = "true", text = "本机", URL = "", key = "local", ImageUrl = gMediaPath .. "ico_tunein_music.png"}
+	{type = "link", folder = "true", text = "专辑", URL = "", key = "album", ImageUrl = gMediaPath .. "ico_tunein_music.png"},
+	{type = "link", folder = "true", text = "歌手", URL = "", key = "singer", ImageUrl = gMediaPath .. "ico_tunein_music.png"},
+	{type = "link", folder = "true", text = "文件夹", URL = "", key = "local", ImageUrl = gMediaPath .. "ico_tunein_music.png"}
+
 }
 
 g_browse_music = {

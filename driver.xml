@@ -347,17 +347,17 @@
       </Icons>
       <Tabs>
         <Tab>
-          <Name>Browse Source</Name>
+          <Name>浏览</Name>
           <ScreenId>BrowseStations</ScreenId>
           <IconId>RootLocation</IconId>
         </Tab>
         <Tab>
-          <Name>Favorites</Name>
+          <Name>收藏</Name>
           <ScreenId>BrowseFavorites</ScreenId>
           <IconId>RootMyFavorites</IconId>
         </Tab>
         <Tab>
-          <Name>Settings</Name>
+          <Name>设置</Name>
           <ScreenId>Settings</ScreenId>
           <IconId>RootSettings</IconId>
         </Tab>
@@ -486,6 +486,11 @@
                 <Value>URL</Value>
               </Param>
               <Param>
+                <Name>flag</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>flag</Value>
+              </Param>
+              <Param>
                 <Name>key</Name>
                 <Type>FIRST_SELECTED</Type>
                 <Value>key</Value>
@@ -510,7 +515,137 @@
           </WillTranslate>
           <PaginationStyle>ALPHA</PaginationStyle>
           <List>
-            <ActionIds>ReplacePlaylist AddTrackToNext AddTrackToQueue</ActionIds>
+            <ActionIds>Playlist AddTrackToNext AddTrackToQueue</ActionIds>
+            <TitleProperty>text</TitleProperty>
+            <SubTitleProperty>subtext</SubTitleProperty>
+            <ImageProperty>ImageUrl</ImageProperty>
+            <LengthProperty>length</LengthProperty>
+            <IsLink>
+              <Property>folder</Property>
+              <ValidValues>
+                <Value>true</Value>
+              </ValidValues>
+            </IsLink>
+            <IsHeader>
+              <Property>is_header</Property>
+              <ValidValues>
+                <Value>true</Value>
+              </ValidValues>
+            </IsHeader>
+          </List>
+        </Screen>
+        <Screen xsi:type="ListScreenType">
+          <Id>BrowseAlbumMusic</Id>
+          <DataCommand>
+            <Name>GetBrowseStationsMenu</Name>
+            <Type>PROTOCOL</Type>
+            <Params>
+              <Param>
+                <Name>screen</Name>
+                <Type>DEFAULT</Type>
+                <Value>BrowseStations</Value>
+              </Param>
+              <Param>
+                <Name>URL</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>URL</Value>
+              </Param>
+              <Param>
+                <Name>flag</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>flag</Value>
+              </Param>
+              <Param>
+                <Name>key</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>search</Name>
+                <Type>SEARCH</Type>
+                <!-- This parameter will contain the search query if the user is searching for something -->
+              </Param>
+              <Param>
+                <Name>search_filter</Name>
+                <Type>SEARCH_FILTER</Type>
+                <!-- This parameter will contain the search filter Id if the user is searching for something -->
+              </Param>
+            </Params>
+          </DataCommand>
+          <WillTranslate>
+            <Property>translate</Property>
+            <ValidValues>
+              <Value>true</Value>
+            </ValidValues>
+          </WillTranslate>
+          <PaginationStyle>ALPHA</PaginationStyle>
+          <List>
+            <ActionIds>Playlist AddTrackToNext AddTrackToQueue</ActionIds>
+            <TitleProperty>text</TitleProperty>
+            <SubTitleProperty>subtext</SubTitleProperty>
+            <ImageProperty>ImageUrl</ImageProperty>
+            <LengthProperty>length</LengthProperty>
+            <IsLink>
+              <Property>folder</Property>
+              <ValidValues>
+                <Value>true</Value>
+              </ValidValues>
+            </IsLink>
+            <IsHeader>
+              <Property>is_header</Property>
+              <ValidValues>
+                <Value>true</Value>
+              </ValidValues>
+            </IsHeader>
+          </List>
+        </Screen>
+        <Screen xsi:type="ListScreenType">
+          <Id>BrowseSingerMusic</Id>
+          <DataCommand>
+            <Name>GetBrowseStationsMenu</Name>
+            <Type>PROTOCOL</Type>
+            <Params>
+              <Param>
+                <Name>screen</Name>
+                <Type>DEFAULT</Type>
+                <Value>BrowseStations</Value>
+              </Param>
+              <Param>
+                <Name>URL</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>URL</Value>
+              </Param>
+              <Param>
+                <Name>key</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>flag</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>flag</Value>
+              </Param>
+              <Param>
+                <Name>search</Name>
+                <Type>SEARCH</Type>
+                <!-- This parameter will contain the search query if the user is searching for something -->
+              </Param>
+              <Param>
+                <Name>search_filter</Name>
+                <Type>SEARCH_FILTER</Type>
+                <!-- This parameter will contain the search filter Id if the user is searching for something -->
+              </Param>
+            </Params>
+          </DataCommand>
+          <WillTranslate>
+            <Property>translate</Property>
+            <ValidValues>
+              <Value>true</Value>
+            </ValidValues>
+          </WillTranslate>
+          <PaginationStyle>ALPHA</PaginationStyle>
+          <List>
+            <ActionIds>Playlist AddTrackToNext AddTrackToQueue</ActionIds>
             <TitleProperty>text</TitleProperty>
             <SubTitleProperty>subtext</SubTitleProperty>
             <ImageProperty>ImageUrl</ImageProperty>
@@ -565,6 +700,71 @@
           <PaginationStyle>ALPHA</PaginationStyle>
           <List>
             <ActionIds>PlayTrack AddToFavorites</ActionIds>
+            <TitleProperty>text</TitleProperty>
+            <SubTitleProperty>subtext</SubTitleProperty>
+            <ImageProperty>ImageUrl</ImageProperty>
+            <LengthProperty>length</LengthProperty>
+            <IsLink>
+              <Property>folder</Property>
+              <ValidValues>
+                <Value>true</Value>
+              </ValidValues>
+            </IsLink>
+            <IsHeader>
+              <Property>is_header</Property>
+              <ValidValues>
+                <Value>true</Value>
+              </ValidValues>
+            </IsHeader>
+            <WillTranslate>
+              <Property>translate</Property>
+              <ValidValues>
+                <Value>true</Value>
+              </ValidValues>
+            </WillTranslate>
+          </List>
+        </Screen>
+        <Screen xsi:type="ListScreenType">
+          <Id>BrowseBoardMusicInfos</Id>
+          <DataCommand>
+            <Name>GetBrowseStationsMenu</Name>
+            <Type>PROTOCOL</Type>
+            <Params>
+              <Param>
+                <Name>screen</Name>
+                <Type>DEFAULT</Type>
+                <Value>BrowseStations</Value>
+              </Param>
+              <Param>
+                <Name>URL</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>URL</Value>
+              </Param>
+              <Param>
+                <Name>key</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>text</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>text</Value>
+              </Param>
+              <Param>
+                <Name>search</Name>
+                <Type>SEARCH</Type>
+                <!-- This parameter will contain the search query if the user is searching for something -->
+              </Param>
+              <Param>
+                <Name>search_filter</Name>
+                <Type>SEARCH_FILTER</Type>
+                <!-- This parameter will contain the search filter Id if the user is searching for something -->
+              </Param>
+            </Params>
+          </DataCommand>
+          <PaginationStyle>ALPHA</PaginationStyle>
+          <List>
+            <ActionIds>ReplacePlaylist AddTrackToNext AddTrackToQueue  ColletedBoards</ActionIds>
             <TitleProperty>text</TitleProperty>
             <SubTitleProperty>subtext</SubTitleProperty>
             <ImageProperty>ImageUrl</ImageProperty>
@@ -894,14 +1094,14 @@
             <Type>PROTOCOL</Type>
           </DataCommand>
           <Item>
-            <HeaderTxt>Settings</HeaderTxt>
+            <HeaderTxt>设置</HeaderTxt>
           </Item>
           <Item>
-            <Label>AUX SWITCH</Label>
+            <Label>AUX开关</Label>
             <OnOff propertyName="ToggleButton" />
           </Item>
           <Item>
-            <Label>Bluetooth</Label>
+            <Label>蓝牙</Label>
             <OnOff propertyName="CheckBox" />
           </Item>
           <Item>
@@ -909,15 +1109,15 @@
             <OnOff propertyName="SPDIF" />
           </Item>
           <Item>
-            <Label>IP Address</Label>
+            <Label>IP 地址</Label>
             <Text propertyName="IP" />
           </Item>
           <Item>
-            <Label>Player Status</Label>
+            <Label>在线状态</Label>
             <Text propertyName="Status" />
           </Item>
           <Item>
-            <Label>Scan Progress</Label>
+            <Label>扫描进程</Label>
             <Text propertyName="scan" />
           </Item>
           <Item>
@@ -955,7 +1155,7 @@
       <Actions>
         <Action>
           <Id>Shuffle</Id>
-          <Name>Turn Shuffle On</Name>
+          <Name>随机播放</Name>
           <IconId>np_shuffle</IconId>
           <Command>
             <Name>ToggleShuffle</Name>
@@ -973,7 +1173,7 @@
         </Action>
         <Action>
           <Id>Repeat</Id>
-          <Name>Turn Repeat On</Name>
+          <Name>循环播放</Name>
           <IconId>np_repeat</IconId>
           <Command>
             <Name>ToggleRepeat</Name>
@@ -991,7 +1191,7 @@
         </Action>
         <Action>
           <Id>Order</Id>
-          <Name>Turn Order On</Name>
+          <Name>列表播放</Name>
           <IconId>ico_tunein_recents</IconId>
           <Command>
             <Name>ToggleOrder</Name>
@@ -1009,17 +1209,41 @@
         </Action>
         <Action>
           <Id>Preset</Id>
-          <Name>Add to Favorites</Name>
+          <Name>添加到收藏</Name>
           <IconId>RootMyFavorites</IconId>
           <Command>
             <Name>PresetCommand</Name>
             <Type>PROTOCOL</Type>
             <Params>
               <Param>
+                <Name>screen</Name>
+                <Type>DEFAULT</Type>
+                <Value>NowPlaying</Value>
+              </Param>
+              <Param>
+                <Name>Id</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>Id</Value>
+              </Param>
+              <Param>
                 <Name>key</Name>
                 <Type>FIRST_SELECTED</Type>
-                <!-- This is the name of the data property of the selected item that will be sent as the param -->
                 <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>type</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>type</Value>
+              </Param>
+              <Param>
+                <Name>Title</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>Title</Value>
+              </Param>
+              <Param>
+                <Name>ImageUrl</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>ImageUrl</Value>
               </Param>
               <Param>
                 <Name>is_preset</Name>
@@ -1052,7 +1276,7 @@
         <Action>
           <Id>PlayTrack</Id>
           <!--播放 -->
-          <Name>Play</Name>
+          <Name>播放</Name>
           <IconId>lis_rha_ico_play.png</IconId>
           <Command>
             <Name>play</Name>
@@ -1079,10 +1303,10 @@
         <Action>
           <Id>PlayRepeat</Id>
           <!--播放 -->
-          <Name>PlayRepeat</Name>
+          <Name>循环播放</Name>
           <IconId>lis_rha_ico_play.png</IconId>
           <Command>
-            <Name>play</Name>
+            <Name>PlayRepeat</Name>
             <Type>PROTOCOL</Type>
             <Params>
               <Param>
@@ -1106,10 +1330,10 @@
         <Action>
           <Id>PlayShuffle</Id>
           <!--播放 -->
-          <Name>PlayShuffle</Name>
+          <Name>随机播放</Name>
           <IconId>lis_rha_ico_play.png</IconId>
           <Command>
-            <Name>play</Name>
+            <Name>PlayShuffle</Name>
             <Type>PROTOCOL</Type>
             <Params>
               <Param>
@@ -1133,7 +1357,7 @@
         <Action>
           <Id>AddTrackToQueue</Id>
           <!--添加到当前播放列表-->
-          <Name>Add To Queue</Name>
+          <Name>添加到当前列表</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>AddToQueue</Name>
@@ -1155,7 +1379,7 @@
         <Action>
           <Id>AddTrackToNext</Id>
           <!--添加到下一曲-->
-          <Name>Add To Next</Name>
+          <Name>添加到下一曲</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>AddToNext</Name>
@@ -1177,7 +1401,7 @@
         <Action>
           <Id>ReplacePlaylist</Id>
           <!--替换当前播放列表 -->
-          <Name>Replace PlayList</Name>
+          <Name>替换当前列表</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>ReplacePlaylist</Name>
@@ -1207,9 +1431,46 @@
           </Command>
         </Action>
         <Action>
+          <Id>Playlist</Id>
+          <!--替换当前播放列表 -->
+          <Name>播放列表</Name>
+          <IconId>lis_rha_ico_add.png</IconId>
+          <Command>
+            <Name>Playlist</Name>
+            <Type>PROTOCOL</Type>
+            <Params>
+              <Param>
+                <Name>key</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>listtype</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>listtype</Value>
+              </Param>
+              <Param>
+                <Name>indexID</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>indexID</Value>
+              </Param>
+              <Param>
+                <Name>musicIndex</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>musicindex</Value>
+              </Param>
+              <Param>
+                <Name>playType</Name>
+                <Type>DEFAULT</Type>
+                <Value>ADD_TO_QUEUE</Value>
+              </Param>
+            </Params>
+          </Command>
+        </Action>
+        <Action>
           <Id>ColletedBoards</Id>
           <!--收藏榜单 -->
-          <Name>ColletedBoards</Name>
+          <Name>收藏榜单</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>AddColletedBoards</Name>
@@ -1243,7 +1504,7 @@
         <Action>
           <Id>DelColletedRadios</Id>
           <!--DEL收藏榜单 -->
-          <Name>DelColletedRadios</Name>
+          <Name>删除收藏</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>DelColletedRadios</Name>
@@ -1260,7 +1521,7 @@
         <Action>
           <Id>DelColletedSongList</Id>
           <!--DEL收藏歌单 -->
-          <Name>DelColletedSongList</Name>
+          <Name>删除收藏歌单</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>DelColletedSongList</Name>
@@ -1277,7 +1538,7 @@
         <Action>
           <Id>DelColletedMusic</Id>
           <!--DEL 收藏歌曲 -->
-          <Name>DelColletedMusic</Name>
+          <Name>删除收藏歌曲</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>DelColletedMusic</Name>
@@ -1299,7 +1560,7 @@
         <Action>
           <Id>AddToFavorites</Id>
           <!--收藏歌曲 -->
-          <Name>Add To Favorites</Name>
+          <Name>添加到收藏</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>AddToFavorites</Name>
@@ -1902,7 +2163,7 @@
     <commands>
       <command>
         <name>Play Music</name>
-        <description>Play Music</description>
+        <description>Play Music PARAM1 on NAME</description>
         <params>
           <param>
             <name>fileName</name>
@@ -1926,7 +2187,7 @@
       </command>
       <command>
         <name>Play Text</name>
-        <description>Play Music</description>
+        <description>Play Text PARAM1 on NAME</description>
         <params>
           <param>
             <name>ttsText</name>

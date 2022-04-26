@@ -209,6 +209,9 @@ msgstr "列表循环"
 msgid "PlayShuffle"	
 msgstr "列表随机"	
 
+msgid "Playlist"	
+msgstr "播放列表"
+
 msgid "DelColletedBoards"
 msgstr "删除收藏"
 

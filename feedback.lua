@@ -16,7 +16,6 @@ function ParseFeedback(strData)
     end
     if (response.result == 200) then
         local msg_id = {
-            ["action.request.getlocalMusic"] = "LocalMusic",
             ["action.request.collectedMusic"] = "GetcollectedMusic",
             ["action.request.collectedBoards"] = "GetcollectedBoards",
             ["action.request.collectedRadios"] = "GetcollectedRadios",
@@ -24,6 +23,19 @@ function ParseFeedback(strData)
             ["action.request.boardMusicInfos"] = "BoardMusicInfos",
             ["action.response.sensorlist"] = "GetSceneList"
         }
+
+        if (response.action == "action.get.classifiedLocalmusic") then
+            if (response.flag == 0) then
+                ParseMessage.SingerlMusic(response)
+
+            elseif (response.flag == 1) then
+                ParseMessage.AlbumMusic(response)
+
+            elseif (response.flag == 2) then
+                ParseMessage.LocalMusic(response)
+            end
+        end
+
         if (type(ParseMessage[msg_id[response.action]]) == "function") then
 
             ParseMessage[msg_id[response.action]](response)
@@ -32,6 +44,7 @@ function ParseFeedback(strData)
 
         if (response.action == "action.response.localMusicChanged") then
             ProxyHelper.GetNextMediaLib(1)
+            g_SCAN = true
         end
 
         if (response.action == "action.response.netMusicUpdateComplete") then
@@ -75,16 +88,20 @@ function ParseFeedback(strData)
 
                     if (gNowPlaying == nil) then
                         GetNowplayList()
-                    end
-                    for k, v in pairs(gNowPlaying) do
-                        if (gCurrentSongTitle == v.Title) then
-                            gCurrentSongIndex = k
+                    else
+                        for k, v in pairs(gNowPlaying) do
+                            if (gCurrentSongTitle == v.Title) then
+                                gCurrentSongIndex = k
+                            end
                         end
+
+                        local img = response.info.pic
+                        local title = response.info.title
+                        local singer = response.info.singer
+                        UpdateMediaInfo(5001, title, singer, "", "", img, g_RoomID, "secondary", "True")
+                        local data = CacheNowPlaying()
+                        QueueChanged(5001, nil, g_RoomID, data)
                     end
-                    UpdateMediaInfo(5001, gNowPlaying[gCurrentSongIndex].Title, gNowPlaying[gCurrentSongIndex].singer,
-                        "", "", gNowPlaying[gCurrentSongIndex].ImageUrl, g_RoomID, "secondary", "True")
-                    local data = CacheNowPlaying()
-                    QueueChanged(5001, nil, g_RoomID, data)
 
                 end
                 if (gQueues["STATE"] ~= "PLAY") then
@@ -134,28 +151,28 @@ function ParseFeedback(strData)
                 end
             end
 
-            UpdateMediaInfo(5001, gNowPlaying[gCurrentSongIndex].Title, gNowPlaying[gCurrentSongIndex].singer, "", "",
-                gNowPlaying[gCurrentSongIndex].ImageUrl, g_RoomID, "secondary", "True")
+            -- UpdateMediaInfo(5001, gNowPlaying[gCurrentSongIndex].Title, gNowPlaying[gCurrentSongIndex].singer, "", "",
+            --     gNowPlaying[gCurrentSongIndex].ImageUrl, g_RoomID, "secondary", "True")
 
             local data = CacheNowPlaying()
             QueueChanged(5001, nil, g_RoomID, data)
 
         elseif (response.action == "action.collect.musics") then
 
-            ProxyHelper.GetNextMediaLib(2)
+            ProxyHelper.GetNextMediaLib(4)
 
         elseif (response.action == "action.response.collectDataChanged") then
             local flag = tonumber(response.flag)
             if (flag == -1) then
-                ProxyHelper.GetNextMediaLib(2)
-            elseif (flag == -2) then
                 ProxyHelper.GetNextMediaLib(4)
+            elseif (flag == -2) then
+                ProxyHelper.GetNextMediaLib(6)
             elseif (flag == -3) then
-                ProxyHelper.GetNextMediaLib(3)
+                ProxyHelper.GetNextMediaLib(5)
             elseif (flag == -4) then
-                ProxyHelper.GetNextMediaLib(5)
+                ProxyHelper.GetNextMediaLib(7)
             elseif (flag > 0) then
-                ProxyHelper.GetNextMediaLib(5)
+                ProxyHelper.GetNextMediaLib(7)
             end
 
         elseif (response.action == "action.request.getVolume") then

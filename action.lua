@@ -21,7 +21,7 @@ function ProxyHelper.BuildCommand(data)
 end
 
 function ProxyHelper.SendCommand(cmd)
-    -- print(cmd)
+    print(cmd)
     C4:SendToNetwork(6001, 60001, ProxyHelper.BuildCommand(cmd))
 end
 

@@ -132,12 +132,12 @@ function ExecuteCommand(strCommand, tParams)
         end
     elseif (strCommand == "Play Music") then
         local message = '{"action":"action.voice.play","fileName":"' .. tParams.fileName .. '","volume":"' ..
-                             tParams.volume .. '","loop":"' .. tParams.loop .. '"}'
+                            tParams.volume .. '","loop":"' .. tParams.loop .. '"}'
         ProxyHelper.SendCommand(message)
 
     elseif (strCommand == "Play Text") then
         local message = '{"action":"action.excute.ttsplay","info":{"ttsText":"' .. tParams.ttsText .. '","volume":"' ..
-                             tParams.volume .. '"}}'
+                            tParams.volume .. '"}}'
         ProxyHelper.SendCommand(message)
 
     end
@@ -155,7 +155,7 @@ function SendPlaylistCommand(id)
 end
 
 function SendSceneCommand(id)
-    local cmd = '{"action": "action.excute.sensor","infos":[' .. id .. "]}"
+    local cmd = '{"action": "action.excute.sensor","info":"' .. id .. '"}'
     ProxyHelper.SendCommand(cmd)
 
 end
