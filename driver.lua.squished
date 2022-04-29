@@ -862,29 +862,19 @@ function ParseFeedback(strData)
         end
 
         if (response.action == "action.response.currentMusicList") then
-            print("get gonowplianghsdasdas")
+            -- print("get gonowplianghsdasdas")
             -- local Nowplaylist = {}
-            if (gNowPlaying[1] ~= nil) then
-                gNowPlaying = {}
-                -- gCurrentSongIndex = 1	
-            end
+            -- if (gNowPlaying[1] ~= nil) then
+            --     gNowPlaying = {}
+            --     -- gCurrentSongIndex = 1	
+            -- end
 
-            for k, v in pairs(response.infos) do
-                gNowPlaying[k] = {
-                    Title = v.title,
-                    fileName = v.fileName,
-                    songSrc = v.songSrc,
-                    singer = v.singer,
-                    ImageUrl = v.pic,
-                    songId = v.songId,
-                    fileUrl = v.fileUrl,
-                    Id = k - 1
-                }
-            end
+            -- end
 
         end
 
         if (response.action == "action.response.playerposition") then
+
             local volume = math.floor(tonumber(response.volumeValue))
             if (gCurrentVolume ~= volume) then
                 -- UpdateVolume(gCurrentVolume)
@@ -892,28 +882,21 @@ function ParseFeedback(strData)
                 UpdateVolume(gCurrentVolume)
             end
             local SongTitle = response.info.title
+            gCurrentSongTitle = SongTitle
+
+            -- for k, v in pairs(gNowPlaying) do
+            --     if (gCurrentSongTitle == v.Title) then
+            --         gCurrentSongIndex = k
+            --     end
+            -- end
+
+            local img = response.info.pic
+            local title = response.info.title
+            local singer = response.info.singer
+            UpdateMediaInfo(5001, title, singer, "", "", img, g_RoomID, "secondary", "True")
+
             if (response.isPlaying) then
-                if (SongTitle ~= gCurrentSongTitle) then
-                    gCurrentSongTitle = SongTitle
 
-                    if (gNowPlaying == nil) then
-                        GetNowplayList()
-                    else
-                        for k, v in pairs(gNowPlaying) do
-                            if (gCurrentSongTitle == v.Title) then
-                                gCurrentSongIndex = k
-                            end
-                        end
-
-                        local img = response.info.pic
-                        local title = response.info.title
-                        local singer = response.info.singer
-                        UpdateMediaInfo(5001, title, singer, "", "", img, g_RoomID, "secondary", "True")
-                        local data = CacheNowPlaying()
-                        QueueChanged(5001, nil, g_RoomID, data)
-                    end
-
-                end
                 if (gQueues["STATE"] ~= "PLAY") then
                     DashboardChanged("PLAY")
                     gQueues["STATE"] = "PLAY"
@@ -936,13 +919,50 @@ function ParseFeedback(strData)
                 -- gCurrentSongTitle = ""
             end
 
+            if (tonumber(response.musicIndex) < 0) then
+                -- local queue = response.info
+                -- 
+
+                -- for k, v in pairs() do
+                --     gNowPlaying[k] = {
+                --         Title = v.title,
+                --         fileName = v.fileName,
+                --         songSrc = v.songSrc,
+                --         singer = v.singer,
+                --         ImageUrl = v.pic,
+                --         songId = v.songId,
+                --         fileUrl = v.fileUrl,
+                --         Id = k - 1
+                --     }
+                -- end
+                local queue = {}
+
+                table.insert(queue, 1, {
+                    Title = response.info.title,
+                    ImageUrl = response.info.pic
+                })
+
+                local List = BuildListXml(queue, true)
+
+                C4:SetTimer(2000, function(oTimer)
+                    QueueChanged(5001, nil, g_RoomID, List)
+
+                end, false)
+
+            else
+                C4:SetTimer(2000, function(oTimer)
+                    GetNowplayList()
+                end, false)
+
+            end
+
         elseif (response.action == "action.request.musiclist") then
 
             -- local Nowplaylist = {}
-            if (gNowPlaying[1] ~= nil) then
-                gNowPlaying = {}
-                -- gCurrentSongIndex = 1	
-            end
+            -- if (gNowPlaying[1] ~= nil) then
+            gNowPlaying = {}
+            -- gCurrentSongIndex = 1	
+            -- end
 
             for k, v in pairs(response.infos) do
                 gNowPlaying[k] = {
@@ -963,9 +983,11 @@ function ParseFeedback(strData)
 
             -- UpdateMediaInfo(5001, gNowPlaying[gCurrentSongIndex].Title, gNowPlaying[gCurrentSongIndex].singer, "", "",
             --     gNowPlaying[gCurrentSongIndex].ImageUrl, g_RoomID, "secondary", "True")
+            C4:SetTimer(2000, function(oTimer)
+                local data = CacheNowPlaying()
+                QueueChanged(5001, nil, g_RoomID, data)
 
-            local data = CacheNowPlaying()
-            QueueChanged(5001, nil, g_RoomID, data)
+            end, false)
 
         elseif (response.action == "action.collect.musics") then
 
@@ -997,38 +1019,41 @@ end
 
 function CacheNowPlaying()
     local queue = {}
-    -- print("gNOWPLAYING IS :" .. #gNowPlaying)
-    if (#gNowPlaying < 6) then
 
-        for i = 1, #gNowPlaying do
-            -- gNowPlaying[gCurrentSongIndex + i -1].ImageUrl = nil
-            queue[i] = gNowPlaying[gCurrentSongIndex + i - 1]
-        end
-    else
-        for i = 1, 5 do
-            -- gNowPlaying[gCurrentSongIndex + i -1].ImageUrl = nil
-            queue[i] = gNowPlaying[gCurrentSongIndex + i - 1]
-        end
-    end
+    queue = gNowPlaying
+    -- print("gNOWPLAYING IS :" .. #gNowPlaying)
+    -- if (#gNowPlaying < 6) then
+
+    --     for i = 1, #gNowPlaying do
+    --         -- gNowPlaying[gCurrentSongIndex + i -1].ImageUrl = nil
+    --         queue[i] = gNowPlaying[gCurrentSongIndex + i - 1]
+    --     end
+    -- else
+    --     for i = 1, 5 do
+    --         -- gNowPlaying[gCurrentSongIndex + i -1].ImageUrl = nil
+    --         queue[i] = gNowPlaying[gCurrentSongIndex + i + 1]
+    --     end
+    -- end
+
     -- print("queue leng is " ..#queue
     -- PrintTable(queue)
 
-    if (#queue > 1) then
+    -- if (#queue > 1) then
 
-        table.insert(queue, 1, {
-            Title = 'Now Playing',
-            isHeader = "true"
-        })
-        table.insert(queue, 3, {
-            Title = 'Up Next',
-            isHeader = "true"
-        })
-    else
-        table.insert(queue, 1, {
-            Title = 'Now Playing',
-            isHeader = "true"
-        })
-    end
+    --     -- table.insert(queue, 1, {
+    --     --     Title = '当前播放歌曲',
+    --     --     isHeader = "true"
+    --     -- })
+    --     table.insert(queue, 3, {
+    --         Title = '下一首歌曲',
+    --         isHeader = "true"
+    --     })
+    -- else
+    --     table.insert(queue, 1, {
+    --         Title = '当前播放歌曲',
+    --         isHeader = "true"
+    --     })
+    -- end
 
     local List = BuildListXml(queue, true)
     local NowPlayingIndex = BuildSimpleXml(nil, {
@@ -1808,7 +1833,7 @@ gConnectStatus = "OFFLINE"
 
 --g_ServerIPAddress = Properties["IP Address"]
 	   
-g_DriverVersion = "V1.06"
+g_DriverVersion = "V1.10"
 --数据解析
 
 
