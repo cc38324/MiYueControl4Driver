@@ -122,7 +122,7 @@ function ExecuteCommand(strCommand, tParams)
         ProxyHelper.SendCommand(message)
         -- Single cycle
 
-    elseif (strCommand == "SENCE ACTION") then -- 新增关联场景
+    elseif (strCommand == "SCENCE ACTION") then -- 新增关联场景
 
         for k, v in pairs(g_SceneList) do
             if (v.cmdName == tParams.SceneName) then
