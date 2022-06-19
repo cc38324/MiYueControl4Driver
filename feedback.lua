@@ -3,6 +3,13 @@
 --
 gCurrentVolume = 0
 tmpQueue = ""
+
+playType = {
+    ListRepeatOn = 0,
+    SingleRepeatOn = 1,
+    RepeatOn = 3,
+    ShuffleOn = 2
+}
 function ParseFeedback(strData)
     -- body
 
@@ -43,8 +50,14 @@ function ParseFeedback(strData)
         end
 
         if (response.action == "action.response.localMusicChanged") then
-            ProxyHelper.GetNextMediaLib(1)
-            g_SCAN = true
+
+            for i = 1, 3 do
+                C4:SetTimer(2000, function(oTimer)
+                    ProxyHelper.GetNextMediaLib(i)
+                end, false)
+
+            end
+            -- g_SCAN = true
         end
 
         if (response.action == "action.response.netMusicUpdateComplete") then
@@ -52,15 +65,11 @@ function ParseFeedback(strData)
         end
 
         if (response.action == "action.response.currentMusicList") then
-            -- print("get gonowplianghsdasdas")
-            -- local Nowplaylist = {}
-            -- if (gNowPlaying[1] ~= nil) then
-            --     gNowPlaying = {}
-            --     -- gCurrentSongIndex = 1	
-            -- end
 
-            -- end
+        end
 
+        if (response.action == "action.response.sensorlist") then
+            -- ProxyHelper.GetNextMediaLib(8)
         end
 
         if (response.action == "action.response.playerposition") then
@@ -71,8 +80,32 @@ function ParseFeedback(strData)
                 gCurrentVolume = volume
                 UpdateVolume(gCurrentVolume)
             end
+
+            if (response.isPlaying) then
+                for k, v in pairs(playType) do
+                    if v == response.playType then
+                        gPlaytype = k
+                    end
+                end
+
+                DashboardChanged("PLAY")
+
+                if (gQueues["STATE"] ~= "PLAY") then
+                    gQueues["STATE"] = "PLAY"
+                end
+
+            else
+                DashboardChanged("PAUSE")
+                gQueues["STATE"] = "PAUSE"
+                -- gCurrentSongTitle = ""
+            end
+
             local SongTitle = response.info.title
-            gCurrentSongTitle = SongTitle
+            if (gCurrentSongTitle == SongTitle) then
+                return
+            else
+                gCurrentSongTitle = SongTitle
+            end
 
             -- for k, v in pairs(gNowPlaying) do
             --     if (gCurrentSongTitle == v.Title) then
@@ -84,30 +117,6 @@ function ParseFeedback(strData)
             local title = response.info.title
             local singer = response.info.singer
             UpdateMediaInfo(5001, title, singer, "", "", img, g_RoomID, "secondary", "True")
-
-            if (response.isPlaying) then
-
-                if (gQueues["STATE"] ~= "PLAY") then
-                    DashboardChanged("PLAY")
-                    gQueues["STATE"] = "PLAY"
-                end
-
-                -- 进度条
-                --[[ local duration = tonumber(response.info.duration)
-			    local position = tonumber(response.position)
-			    if(duration >0 and position >0) then
-			   -- print(tonumber(response.position))
-				    UpdateProgress (duration,position)
-			   else
-				duration = 0
-				position = 0
-				UpdateProgress (duration,position)
-			   end]] --
-            else
-                DashboardChanged("PAUSE")
-                gQueues["STATE"] = "PAUSE"
-                -- gCurrentSongTitle = ""
-            end
 
             if (tonumber(response.musicIndex) < 0) then
                 -- local queue = response.info
@@ -128,8 +137,8 @@ function ParseFeedback(strData)
                 local queue = {}
 
                 table.insert(queue, 1, {
-                    Title = response.info.title,
-                    ImageUrl = response.info.pic
+                    title = response.info.title,
+                    pic = response.info.pic
                 })
 
                 local List = BuildListXml(queue, true)
@@ -137,11 +146,6 @@ function ParseFeedback(strData)
                 C4:SetTimer(2000, function(oTimer)
                     QueueChanged(5001, nil, g_RoomID, List)
 
-                end, false)
-
-            else
-                C4:SetTimer(2000, function(oTimer)
-                    GetNowplayList()
                 end, false)
 
             end
@@ -156,14 +160,15 @@ function ParseFeedback(strData)
 
             for k, v in pairs(response.infos) do
                 gNowPlaying[k] = {
-                    Title = v.title,
+                    title = v.title,
                     fileName = v.fileName,
                     songSrc = v.songSrc,
                     singer = v.singer,
-                    ImageUrl = v.pic,
+                    pic = v.pic,
                     songId = v.songId,
                     fileUrl = v.fileUrl,
-                    Id = k - 1
+                    Id = k - 1,
+                    isNetUrl = v.isNetUrl
                 }
 
                 if (gCurrentSongTitle == v.title) then
@@ -192,16 +197,22 @@ function ParseFeedback(strData)
             elseif (flag == -3) then
                 ProxyHelper.GetNextMediaLib(5)
             elseif (flag == -4) then
+                g_GetColl = false
                 ProxyHelper.GetNextMediaLib(7)
             elseif (flag > 0) then
-                ProxyHelper.GetNextMediaLib(7)
+                local cmd = '{"action":"action.request.boardMusicInfos","id":' .. flag .. "}"
+                ProxyHelper.AddCommandList(cmd)
+
             end
 
         elseif (response.action == "action.request.getVolume") then
             gCurrentVolume = math.floor(tonumber(response.volumeValue))
             UpdateVolume(gCurrentVolume)
         elseif (response.action == "action.request.changeVolume") then
-            GetCurrentVolume()
+            -- GetCurrentVolume()
+            gCurrentVolume = math.floor(tonumber(response.volumeValue))
+            UpdateVolume(gCurrentVolume)
+
         end
 
     end

@@ -90,9 +90,11 @@ function ParseMessage.GetcollectedSonglist(strData) -- 获取下载收藏歌单
     -- body
     ProxyHelper.SongList = strData.infos or {}
     ProxyHelper.SaveInfo("songlist", json:encode(strData.infos))
-    for k, v in pairs(ProxyHelper.SongList) do
-        local cmd = '{"action":"action.request.boardMusicInfos","id":' .. v.id .. "}"
-        ProxyHelper.AddCommandList(cmd)
+    if (g_GetColl) then
+        for k, v in pairs(ProxyHelper.SongList) do
+            local cmd = '{"action":"action.request.boardMusicInfos","id":' .. v.id .. "}"
+            ProxyHelper.AddCommandList(cmd)
+        end
     end
     if (g_SCAN) then
         ProxyHelper.GetNextMediaLib(8)
@@ -284,35 +286,35 @@ function BrowseCollectedMusic(idBinding, tParams)
         local fileName = g_CollectedMusic[i].fileName
         local fileUrl = g_CollectedMusic[i].fileUrl
         local isNetUrl = g_CollectedMusic[i].isNetUrl
-        if (isNetUrl == 0) then
-            local tmp = {
-                type = "song",
-                listtype = "CollectedMusic",
-                folder = "false",
-                text = fileName,
-                subtext = "",
-                singer = singer,
-                key = fileName,
-                ImageUrl = "",
-                musicindex = i
-            }
-            table.insert(tListItems, tmp)
-        else
-            local songId = g_CollectedMusic[i].songId
-            local img = g_CollectedMusic[i].pic
-            local tmp = {
-                type = "radio",
-                folder = "false",
-                listtype = "CollectedMusic",
-                text = title,
-                singer = singer,
-                songSrc = songSrc,
-                key = title,
-                ImageUrl = img,
-                musicindex = i
-            }
-            table.insert(tListItems, tmp)
-        end
+        -- if (isNetUrl == 0) then
+        --     local tmp = {
+        --         type = "song",
+        --         listtype = "CollectedMusic",
+        --         folder = "false",
+        --         text = fileName,
+        --         subtext = "",
+        --         singer = singer,
+        --         key = fileName,
+        --         ImageUrl = "",
+        --         musicindex = i
+        --     }
+        --     table.insert(tListItems, tmp)
+        -- else
+        local songId = g_CollectedMusic[i].songId
+        local img = g_CollectedMusic[i].pic
+        local tmp = {
+            type = "radio",
+            folder = "false",
+            listtype = "CollectedMusic",
+            text = title,
+            singer = singer,
+            songSrc = songSrc,
+            key = title,
+            ImageUrl = img,
+            musicindex = i
+        }
+        table.insert(tListItems, tmp)
+        -- end
     end
     build_MediaByKeyTable(g_CollectedMusic)
     DataReceived(idBinding, tParams["NAVID"], tParams["SEQ"], tListItems)
@@ -397,7 +399,8 @@ function build_MediaByKeyTable(data)
                     singer = singer,
                     songSrc = songSrc,
                     title = title,
-                    key = title
+                    key = title,
+                    indexID = indexID
                 }
             else
                 --  dbg("333333")

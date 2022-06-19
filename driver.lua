@@ -641,11 +641,11 @@ end
 function DashboardChanged(state)
 	local ids = nil
 	if (state == "PLAY") then
-		ids = "SkipRev Pause SkipFwd"
+		ids =  "SkipRev Pause SkipFwd " .. gPlaytype
 	elseif ((state == "PAUSE") or (state == "STOP")) then
-		ids = "SkipRev Play SkipFwd"
+		ids = "SkipRev Play SkipFwd " .. gPlaytype
 	elseif (state == "END") then
-		ids = "SkipRev Pause SkipFwd"		
+		ids = "SkipRev Pause SkipFwd " .. gPlaytype		
 	else
 		ids = ""
 	end
@@ -660,11 +660,11 @@ end
 
 function GetDashboardByState(state)
 	if (state == "PLAY") then
-		return "SkipRev Pause SkipFwd"
+		return "SkipRev Pause SkipFwd " .. gPlaytype
 	elseif ((state == "PAUSE") or (state == "STOP")) then
-		return "SkipRev Play SkipFwd"
+		return "SkipRev Play SkipFwd " .. gPlaytype
 	elseif (state == "END") then
-		return "SkipRev Pause SkipFwd"		
+		return "SkipRev Pause SkipFwd " .. gPlaytype	
 	else
 		return ""
 	end

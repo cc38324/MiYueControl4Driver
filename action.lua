@@ -10,6 +10,7 @@ function ProxyHelper.Scan()
     ProxyHelper.GetNextMediaLib(1)
     -- gScan = true
     -- body
+    g_GetColl = true
     g_SCAN = true
     DriverHelper.CheckScan = DriverHelper.AddTimer(DriverHelper.CheckScan, 10, "MINUTES", true);
     -- gCurrentScan = gCurrentScan + 1
@@ -94,6 +95,12 @@ function OnConnectionStatusChanged(idBinding, nPort, strStatus)
         if (strStatus == "ONLINE") then
             print("Connect was successful.  Send URL packet.")
             GetCurrentVolume()
+
+            C4:SetTimer(2000, function(oTimer)
+                GetNowplayList()
+
+            end, false)
+
             -- DriverHelper.KillTimer(DriverHelper.Reconnect)
         else
             print("send connect to moudel")

@@ -178,28 +178,59 @@ function PRX_CMD.NowPlayingCommand(idBinding, tParams) -- 当前播放处选择�
 
 end
 
+function PRX_CMD.Deletemusic(idBinding, tParams) -- 当前播放处选择播放歌曲
+    local args = ParseProxyCommandArgs(tParams)
+    -- dbgTable(args)
+    gCurrentSongIndex = tonumber(args.Id) + 1
+    local message = '{"action": "action.request.deletemusic", "infos": [' .. args.Id .. "]}"
+    ProxyHelper.SendCommand(message)
+    -- UpdateMediaInfo(5001,gNowPlaying[gCurrentSongIndex].Title,gNowPlaying[gCurrentSongIndex].fileName,gNowPlaying[gCurrentSongIndex].singer,gNowPlaying[gCurrentSongIndex].songSrc,gNowPlaying[gCurrentSongIndex].ImageUrl,g_RoomID,"secondary", "True")
+
+end
+
 function PRX_CMD.ToggleRepeat() -- 循环
     -- body
+    gPlaytype = "SingleRepeatOn"
     REPEAT = true
     SHUFFLE = false
-    local message = '{"action": "action.request.switchplaytype","playType": 0}'
+    local message = '{"action": "action.request.switchplaytype","playType": 1}'
     ProxyHelper.SendCommand(message)
+    DashboardChanged("PLAY")
+
 end
 
 function PRX_CMD.ToggleOrder() -- 循环
     -- body
+    gPlaytype = "ListRepeatOn"
     REPEAT = true
     SHUFFLE = false
-    local message = '{"action": "action.request.switchplaytype","playType": 3}'
+    local message = '{"action": "action.request.switchplaytype","playType": 0}'
     ProxyHelper.SendCommand(message)
+    DashboardChanged("PLAY")
+
+end
+
+function PRX_CMD.ToggleSingleRepeat() -- 循环
+    gPlaytype = "ShuffleOn"
+
+    -- body
+    REPEAT = true
+    SHUFFLE = false
+    local message = '{"action": "action.request.switchplaytype","playType": 2}'
+    ProxyHelper.SendCommand(message)
+    DashboardChanged("PLAY")
+
 end
 
 function PRX_CMD.ToggleShuffle() -- 当前播放页面的打开随机播放
+    gPlaytype = "RepeatOn"
 
     SHUFFLE = not (SHUFFLE)
 
-    local message = '{"action": "action.request.switchplaytype","playType": 2}'
+    local message = '{"action": "action.request.switchplaytype","playType": 3}'
     ProxyHelper.SendCommand(message)
+    DashboardChanged("PLAY")
+
 end
 
 function PRX_CMD.PresetCommand(idBinding, tParams) -- 当前播放页面的收藏按钮功能实现
@@ -326,9 +357,12 @@ function PRX_CMD.DelColletedRadios(idBinding, tParams)
     -- body
     local args = ParseProxyCommandArgs(tParams)
     local title = args.key
+    -- local data = json:encode(g_MediaByKey[title])
+
     -- local singer = args.singer
     local tmp = {
-        title = title
+        title = title,
+        id = g_MediaByKey[title].indexID
     }
     local message = json:encode(tmp)
     local cmd = '{"action":"action.delete.collectedradios","info":' .. message .. "}"
@@ -336,8 +370,11 @@ function PRX_CMD.DelColletedRadios(idBinding, tParams)
     -- ProxyHelper.GetNextMediaLib(6)
 end
 
-function PRX_CMD.DelColletedBoards()
-    local cmd = '{"action":"action.delete.collectedboards","id":' .. g_selectboardsid .. "}"
+function PRX_CMD.DelColletedBoards(idBinding, tParams)
+    local args = ParseProxyCommandArgs(tParams)
+
+    local cmd = '{"action":"action.delete.collectedboards","id":' .. args.key .. "}"
+
     ProxyHelper.SendCommand(cmd)
     -- ProxyHelper.GetNextMediaLib(5)
 

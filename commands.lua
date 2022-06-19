@@ -159,3 +159,5 @@ function SendSceneCommand(id)
     ProxyHelper.SendCommand(cmd)
 
 end
+
+---获取各个歌曲------

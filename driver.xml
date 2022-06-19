@@ -6,7 +6,7 @@
   <model>MUSIC PLAYER</model>
   <created>06/01/2019 12:47 PM</created>
   <modified>06/27/2021 22:16PM</modified>
-  <version>107</version>
+  <version>110</version>
   <small>devices_sm\c4.gif</small>
   <large>devices_lg\c4.gif</large>
   <control>lua_gen</control>
@@ -50,8 +50,7 @@
     <navigator_display_option proxybindingid="5001">
       <translation_url>controller://driver/MiYue/translations</translation_url>
     </navigator_display_option>
-    <UI proxybindingid="5001"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <UI proxybindingid="5001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <BrandingIcon>Branding</BrandingIcon>
       <DeviceIcon>Device</DeviceIcon>
       <Icons>
@@ -284,65 +283,69 @@
           <Icon width="80" height="80">controller://driver/MiYue/icons/80x80/lis_rha_ico_play.png</Icon>
           <Icon width="90" height="90">controller://driver/MiYue/icons/90x90/lis_rha_ico_play.png</Icon>
         </IconGroup>
-        <IconGroup id="np_repeat">
-          <Icon width="20" height="20">controller://driver/MiYue/icons/np_repeat/np_repeat_20.png</Icon>
-          <Icon width="30" height="30">controller://driver/MiYue/icons/np_repeat/np_repeat_30.png</Icon>
-          <Icon width="40" height="40">controller://driver/MiYue/icons/np_repeat/np_repeat_40.png</Icon>
-          <Icon width="50" height="50">controller://driver/MiYue/icons/np_repeat/np_repeat_50.png</Icon>
-          <Icon width="60" height="60">controller://driver/MiYue/icons/np_repeat/np_repeat_60.png</Icon>
-          <Icon width="70" height="70">controller://driver/MiYue/icons/np_repeat/np_repeat_70.png</Icon>
-          <Icon width="80" height="80">controller://driver/MiYue/icons/np_repeat/np_repeat_80.png</Icon>
-          <Icon width="90" height="90">controller://driver/MiYue/icons/np_repeat/np_repeat_90.png</Icon>
-          <Icon width="100" height="100">controller://driver/MiYue/icons/np_repeat/np_repeat_100.png</Icon>
-          <Icon width="110" height="110">controller://driver/MiYue/icons/np_repeat/np_repeat_110.png</Icon>
-          <Icon width="120" height="120">controller://driver/MiYue/icons/np_repeat/np_repeat_120.png</Icon>
-          <Icon width="130" height="130">controller://driver/MiYue/icons/np_repeat/np_repeat_130.png</Icon>
-          <Icon width="140" height="140">controller://driver/MiYue/icons/np_repeat/np_repeat_140.png</Icon>
+        <IconGroup id="repeat">
+          <Icon width="20" height="20">controller://driver/MiYue/icons/repeat/icons/device/repeat_20.png</Icon>
+          <Icon width="30" height="30">controller://driver/MiYue/icons/repeat/icons/device/repeat_30.png</Icon>
+          <Icon width="40" height="40">controller://driver/MiYue/icons/repeat/icons/device/repeat_40.png</Icon>
+          <Icon width="50" height="50">controller://driver/MiYue/icons/repeat/icons/device/repeat_50.png</Icon>
+          <Icon width="60" height="60">controller://driver/MiYue/icons/repeat/icons/device/repeat_60.png</Icon>
+          <Icon width="70" height="70">controller://driver/MiYue/icons/repeat/icons/device/repeat_70.png</Icon>
+          <Icon width="80" height="80">controller://driver/MiYue/icons/repeat/icons/device/repeat_80.png</Icon>
+          <Icon width="90" height="90">controller://driver/MiYue/icons/repeat/icons/device/repeat_90.png</Icon>
+          <Icon width="100" height="100">controller://driver/MiYue/icons/repeat/icons/device/repeat_100.png</Icon>
+          <Icon width="110" height="110">controller://driver/MiYue/icons/repeat/icons/device/repeat_110.png</Icon>
+          <Icon width="120" height="120">controller://driver/MiYue/icons/repeat/icons/device/repeat_120.png</Icon>
+          <Icon width="130" height="130">controller://driver/MiYue/icons/repeat/icons/device/repeat_130.png</Icon>
+          <Icon width="140" height="140">controller://driver/MiYue/icons/repeat/icons/device/repeat_140.png</Icon>
+          <Icon width="1024" height="1024">controller://driver/MiYue/icons/repeat/icons/device/repeat_1024.png</Icon>
         </IconGroup>
-        <IconGroup id="np_repeat_a">
-          <Icon width="20" height="20">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_20.png</Icon>
-          <Icon width="30" height="30">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_30.png</Icon>
-          <Icon width="40" height="40">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_40.png</Icon>
-          <Icon width="50" height="50">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_50.png</Icon>
-          <Icon width="60" height="60">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_60.png</Icon>
-          <Icon width="70" height="70">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_70.png</Icon>
-          <Icon width="80" height="80">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_80.png</Icon>
-          <Icon width="90" height="90">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_90.png</Icon>
-          <Icon width="100" height="100">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_100.png</Icon>
-          <Icon width="110" height="110">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_110.png</Icon>
-          <Icon width="120" height="120">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_120.png</Icon>
-          <Icon width="130" height="130">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_130.png</Icon>
-          <Icon width="140" height="140">controller://driver/MiYue/icons/np_repeat_a/np_repeat_a_140.png</Icon>
+        <IconGroup id="shuffle">
+          <Icon width="20" height="20">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_20.png</Icon>
+          <Icon width="30" height="30">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_30.png</Icon>
+          <Icon width="40" height="40">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_40.png</Icon>
+          <Icon width="50" height="50">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_50.png</Icon>
+          <Icon width="60" height="60">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_60.png</Icon>
+          <Icon width="70" height="70">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_70.png</Icon>
+          <Icon width="80" height="80">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_80.png</Icon>
+          <Icon width="90" height="90">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_90.png</Icon>
+          <Icon width="100" height="100">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_100.png</Icon>
+          <Icon width="110" height="110">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_110.png</Icon>
+          <Icon width="120" height="120">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_120.png</Icon>
+          <Icon width="130" height="130">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_130.png</Icon>
+          <Icon width="140" height="140">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_140.png</Icon>
+          <Icon width="1024" height="1024">controller://driver/MiYue/icons/shuffle/icons/device/shuflle_1024.png</Icon>
         </IconGroup>
-        <IconGroup id="np_shuffle">
-          <Icon width="20" height="20">controller://driver/MiYue/icons/np_shuffle/np_shuffle_20.png</Icon>
-          <Icon width="30" height="30">controller://driver/MiYue/icons/np_shuffle/np_shuffle_30.png</Icon>
-          <Icon width="40" height="40">controller://driver/MiYue/icons/np_shuffle/np_shuffle_40.png</Icon>
-          <Icon width="50" height="50">controller://driver/MiYue/icons/np_shuffle/np_shuffle_50.png</Icon>
-          <Icon width="60" height="60">controller://driver/MiYue/icons/np_shuffle/np_shuffle_60.png</Icon>
-          <Icon width="70" height="70">controller://driver/MiYue/icons/np_shuffle/np_shuffle_70.png</Icon>
-          <Icon width="80" height="80">controller://driver/MiYue/icons/np_shuffle/np_shuffle_80.png</Icon>
-          <Icon width="90" height="90">controller://driver/MiYue/icons/np_shuffle/np_shuffle_90.png</Icon>
-          <Icon width="100" height="100">controller://driver/MiYue/icons/np_shuffle/np_shuffle_100.png</Icon>
-          <Icon width="110" height="110">controller://driver/MiYue/icons/np_shuffle/np_shuffle_110.png</Icon>
-          <Icon width="120" height="120">controller://driver/MiYue/icons/np_shuffle/np_shuffle_120.png</Icon>
-          <Icon width="130" height="130">controller://driver/MiYue/icons/np_shuffle/np_shuffle_130.png</Icon>
-          <Icon width="140" height="140">controller://driver/MiYue/icons/np_shuffle/np_shuffle_140.png</Icon>
+        <IconGroup id="single_repeat">
+          <Icon width="20" height="20">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_20.png</Icon>
+          <Icon width="30" height="30">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_30.png</Icon>
+          <Icon width="40" height="40">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_40.png</Icon>
+          <Icon width="50" height="50">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_50.png</Icon>
+          <Icon width="60" height="60">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_60.png</Icon>
+          <Icon width="70" height="70">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_70.png</Icon>
+          <Icon width="80" height="80">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_80.png</Icon>
+          <Icon width="90" height="90">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_90.png</Icon>
+          <Icon width="100" height="100">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_100.png</Icon>
+          <Icon width="110" height="110">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_110.png</Icon>
+          <Icon width="120" height="120">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_120.png</Icon>
+          <Icon width="130" height="130">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_130.png</Icon>
+          <Icon width="140" height="140">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_140.png</Icon>
+          <Icon width="1024" height="1024">controller://driver/MiYue/icons/single_repeat/icons/device/single_repeat_1024.png</Icon>
         </IconGroup>
-        <IconGroup id="np_shuffle_a">
-          <Icon width="20" height="20">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_20.png</Icon>
-          <Icon width="30" height="30">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_30.png</Icon>
-          <Icon width="40" height="40">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_40.png</Icon>
-          <Icon width="50" height="50">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_50.png</Icon>
-          <Icon width="60" height="60">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_60.png</Icon>
-          <Icon width="70" height="70">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_70.png</Icon>
-          <Icon width="80" height="80">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_80.png</Icon>
-          <Icon width="90" height="90">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_90.png</Icon>
-          <Icon width="100" height="100">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_100.png</Icon>
-          <Icon width="110" height="110">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_110.png</Icon>
-          <Icon width="120" height="120">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_120.png</Icon>
-          <Icon width="130" height="130">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_130.png</Icon>
-          <Icon width="140" height="140">controller://driver/MiYue/icons/np_shuffle_a/np_shuffle_a_140.png</Icon>
+        <IconGroup id="list_repeat">
+          <Icon width="20" height="20">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_20.png</Icon>
+          <Icon width="30" height="30">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_30.png</Icon>
+          <Icon width="40" height="40">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_40.png</Icon>
+          <Icon width="50" height="50">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_50.png</Icon>
+          <Icon width="60" height="60">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_60.png</Icon>
+          <Icon width="70" height="70">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_70.png</Icon>
+          <Icon width="80" height="80">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_80.png</Icon>
+          <Icon width="90" height="90">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_90.png</Icon>
+          <Icon width="100" height="100">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_100.png</Icon>
+          <Icon width="110" height="110">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_110.png</Icon>
+          <Icon width="120" height="120">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_120.png</Icon>
+          <Icon width="130" height="130">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_130.png</Icon>
+          <Icon width="140" height="140">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_140.png</Icon>
+          <Icon width="1024" height="1024">controller://driver/MiYue/icons/list_repeat/icons/device/list_repeat_1024.png</Icon>
         </IconGroup>
       </Icons>
       <Tabs>
@@ -884,7 +887,7 @@
           </DataCommand>
           <PaginationStyle>ALPHA</PaginationStyle>
           <List>
-            <ActionIds>ReplacePlaylist AddTrackToQueue  DelColletedSongList</ActionIds>
+            <ActionIds>ReplacePlaylist AddTrackToQueue AddTrackToNext DelColletedSongList</ActionIds>
             <TitleProperty>text</TitleProperty>
             <SubTitleProperty>subtext</SubTitleProperty>
             <ImageProperty>ImageUrl</ImageProperty>
@@ -944,7 +947,7 @@
           </DataCommand>
           <PaginationStyle>ALPHA</PaginationStyle>
           <List>
-            <ActionIds>PlayRepeat PlayShuffle</ActionIds>
+            <ActionIds>PlayRepeat PlayShuffle DelColletedBoards</ActionIds>
             <TitleProperty>text</TitleProperty>
             <SubTitleProperty>subtext</SubTitleProperty>
             <ImageProperty>ImageUrl</ImageProperty>
@@ -1134,10 +1137,10 @@
       <NowPlaying>
         <Image />
         <List>
-          <ActionIds>NowPlaying Preset Shuffle Repeat Order</ActionIds>
-          <TitleProperty>Title</TitleProperty>
+          <ActionIds>NowPlaying Preset Deletemusic</ActionIds>
+          <TitleProperty>title</TitleProperty>
           <!-- <SubTitleProperty>SubTitle</SubTitleProperty>-->
-          <ImageProperty>ImageUrl</ImageProperty>
+          <ImageProperty>pic</ImageProperty>
           <IsHeader>
             <Property>header</Property>
             <ValidValues>
@@ -1487,7 +1490,7 @@
         <Action>
           <Id>DelColletedBoards</Id>
           <!--DEL收藏榜单 -->
-          <Name>DelColletedBoards</Name>
+          <Name>删除榜单</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>DelColletedBoards</Name>
@@ -1514,6 +1517,11 @@
                 <Name>key</Name>
                 <Type>FIRST_SELECTED</Type>
                 <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>ID</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>ID</Value>
               </Param>
             </Params>
           </Command>
@@ -1898,10 +1906,56 @@
         </Action>
         <Action>
           <Id>NowPlaying</Id>
-          <Name>Play</Name>
+          <Name>播放歌曲</Name>
           <IconId>lis_rha_ico_add.png</IconId>
           <Command>
             <Name>NowPlayingCommand</Name>
+            <Type>PROTOCOL</Type>
+            <Params>
+              <Param>
+                <Name>screen</Name>
+                <Type>DEFAULT</Type>
+                <Value>NowPlaying</Value>
+              </Param>
+              <Param>
+                <Name>Id</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>Id</Value>
+              </Param>
+              <Param>
+                <Name>key</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>key</Value>
+              </Param>
+              <Param>
+                <Name>type</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>type</Value>
+              </Param>
+              <Param>
+                <Name>Title</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>Title</Value>
+              </Param>
+              <Param>
+                <Name>ImageUrl</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>ImageUrl</Value>
+              </Param>
+              <Param>
+                <Name>is_preset</Name>
+                <Type>FIRST_SELECTED</Type>
+                <Value>is_preset</Value>
+              </Param>
+            </Params>
+          </Command>
+        </Action>
+        <Action>
+          <Id>Deletemusic</Id>
+          <Name>删除歌曲</Name>
+          <IconId>lis_rha_ico_add.png</IconId>
+          <Command>
+            <Name>Deletemusic</Name>
             <Type>PROTOCOL</Type>
             <Params>
               <Param>
@@ -1973,6 +2027,46 @@
           <ButtonType>SKIP_FWD</ButtonType>
           <ReleaseCommand>
             <Name>TransportSkipFwdButton</Name>
+            <Type>PROTOCOL</Type>
+          </ReleaseCommand>
+        </Transport>
+        <Transport>
+          <Id>ShuffleOn</Id>
+          <ButtonType>CUSTOM</ButtonType>
+          <Name>Turn Shuffle On</Name>
+          <IconId>shuffle</IconId>
+          <ReleaseCommand>
+            <Name>ToggleShuffle</Name>
+            <Type>PROTOCOL</Type>
+          </ReleaseCommand>
+        </Transport>
+        <Transport>
+          <Id>ListRepeatOn</Id>
+          <ButtonType>CUSTOM</ButtonType>
+          <Name>Turn Repeat On</Name>
+          <IconId>list_repeat</IconId>
+          <ReleaseCommand>
+            <Name>ToggleRepeat</Name>
+            <Type>PROTOCOL</Type>
+          </ReleaseCommand>
+        </Transport>
+        <Transport>
+          <Id>RepeatOn</Id>
+          <ButtonType>CUSTOM</ButtonType>
+          <Name>Turn Repeat On</Name>
+          <IconId>repeat</IconId>
+          <ReleaseCommand>
+            <Name>ToggleOrder</Name>
+            <Type>PROTOCOL</Type>
+          </ReleaseCommand>
+        </Transport>
+        <Transport>
+          <Id>SingleRepeatOn</Id>
+          <ButtonType>CUSTOM</ButtonType>
+          <Name>Turn Repeat On</Name>
+          <IconId>single_repeat</IconId>
+          <ReleaseCommand>
+            <Name>ToggleSingleRepeat</Name>
             <Type>PROTOCOL</Type>
           </ReleaseCommand>
         </Transport>
