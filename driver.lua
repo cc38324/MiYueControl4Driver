@@ -40,7 +40,7 @@ gConnectStatus = "OFFLINE"
 
 --g_ServerIPAddress = Properties["IP Address"]
 	   
-g_DriverVersion = "V1.10"
+g_DriverVersion = "V1.11"
 --数据解析
 
 
