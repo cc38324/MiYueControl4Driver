@@ -6,7 +6,7 @@
   <model>MUSIC PLAYER</model>
   <created>06/01/2019 12:47 PM</created>
   <modified>07/21/2022 14:27PM</modified>
-  <version>111</version>
+  <version>112</version>
   <small>devices_sm\c4.gif</small>
   <large>devices_lg\c4.gif</large>
   <control>lua_gen</control>
@@ -2426,7 +2426,7 @@
       <property>
         <name>Driver Version</name>
         <type>STRING</type>
-        <default>V1.11</default>
+        <default>V1.12</default>
         <readonly>true</readonly>
       </property>
       <property>

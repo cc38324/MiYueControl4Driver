@@ -15,5 +15,5 @@
 /.idea/caches/*.ser
 /app/build.gradle
 /evs_sdk/evs_sdk.iml
-driver.lua.squished
-squishy
+/driver.lua.squished
+/squishy

@@ -40,7 +40,7 @@ gConnectStatus = "OFFLINE"
 
 --g_ServerIPAddress = Properties["IP Address"]
 	   
-g_DriverVersion = "V1.11"
+g_DriverVersion = "V1.12"
 --数据解析
 
 
@@ -740,6 +740,7 @@ end
 
 function OnDriverLateInit()
     --ProxyHelper.ConnectServer()
+	g_SceneList = ProxyHelper.ReadInfo("SceneList")
     g_LocalMusic = ProxyHelper.ReadInfo("localmusic")
 	g_CollectedBoards = ProxyHelper.ReadInfo("CollectedBoards")
 	g_CollectedRadios = ProxyHelper.ReadInfo("CollectedRadios")
