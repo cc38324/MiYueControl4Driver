@@ -4,21 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository status
 
-This repository is currently **empty** — no source code, configuration, or documentation has been committed yet. The repository name (`MiYueControl4Driver`) suggests a Control4 home-automation driver, but no project files exist to confirm language, framework, or architecture.
+This repository contains the design for a home background music player (target hardware: RK3308 + AP6256, Rockchip 原厂 SDK / Buildroot-style). **No source code is committed yet.** The current artifact is the integration plan in `docs/matter-integration.md`.
 
-If asked how to build, test, or run anything, state plainly that no source exists yet. Do not invent commands, file layouts, or architecture before the corresponding code is in the repository.
+If asked how to build, run, or test, state plainly that no source exists yet. Do not invent commands or file layouts beyond what the design document specifies — and even then, mark them as planned, not present.
 
-## What to do on first real commit
+## Project direction (per `docs/matter-integration.md`)
 
-When source code is first added, this file should be replaced with concrete guidance. At minimum, document:
+- Hardware: RK3308 / AP6256 BT-only / Ethernet-only (no Wi-Fi)
+- BT stack: Broadcom BSA (not BlueZ), serving the in-house App's BLE GATT. Must remain untouched.
+- Audio streaming: shairport-sync (AirPlay 2) already in production, uses system Avahi.
+- Goal: integrate Matter so the device joins Apple Home / Google Home / Alexa / 米家 as a Speaker (Device Type `0x0022`), without disturbing existing BSA / shairport-sync.
+- Strategy: **Matter over Ethernet with On-Network Commissioning, BLE disabled in Matter.** Justified because BLE in Matter exists to ferry Wi-Fi/Thread credentials — irrelevant when the device is wired.
 
-1. **Build / run / test commands** — including how to run a single test.
-2. **High-level architecture** — the "big picture" that requires reading multiple files to grasp (entry points, module boundaries, data flow, key abstractions).
-3. **Project-specific conventions** — anything non-obvious about how this codebase is organized or extended. For a Control4 driver this typically means: Lua entry points and lifecycle callbacks (`OnDriverInit`, `OnDriverLateInit`, `ReceivedFromProxy`, etc.), the `driver.xml` manifest, the `.c4z` packaging layout, target device protocol (TCP/serial/HTTP), and any sandbox/runtime constraints — but only document what the code actually uses.
-4. **Important parts of any README, `.cursor/rules/`, `.cursorrules`, or `.github/copilot-instructions.md`** if those files are added.
-
-Do not invent any of the above before the code exists.
+When real code lands, replace this file with concrete build / run / test commands and a high-level architecture pointer.
 
 ## Branch convention
 
-Development for the current Claude-assisted task happens on `claude/add-claude-documentation-GZCwq`. Push to that branch; do not push to `master`/`main` without explicit instruction.
+Development for the current Claude-assisted task happens on `claude/audio-player-matter-integration-8NOI6`. Push to that branch; do not push to `master`/`main` without explicit instruction.
